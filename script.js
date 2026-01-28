@@ -95,4 +95,70 @@ function orderOnWhatsApp() {
   window.open(whatsappURL, "_blank");
 }
 
+//Filter//
+function filterProducts(category) {
+  const products = document.querySelectorAll(".card");
+
+  products.forEach((product) => {
+    if (category === "all" || product.dataset.category === category) {
+      product.style.display = "block";
+    } else {
+      product.style.display = "none";
+    }
+  });
+}
+
+function filterByPrice() {
+  const selectedValue = document.getElementById("price").value;
+  const products = document.querySelectorAll(".card");
+
+  products.forEach((product) => {
+    const price = parseInt(product.dataset.price);
+
+    if (
+      selectedValue === "all" ||
+      (selectedValue === "under1000" && price < 1000) ||
+      (selectedValue === "above1000" && price >= 1000)
+    ) {
+      product.style.display = "block";
+    } else {
+      product.style.display = "none";
+    }
+  });
+}
+
+function searchProducts() {
+  const searchValue = document.getElementById("searchInput").value.toLowerCase();
+  const products = document.querySelectorAll(".card");
+
+  products.forEach((product) => {
+    const productName = product.querySelector("h3").innerText.toLowerCase();
+
+    if (productName.includes(searchValue)) {
+      product.style.display = "block";
+    } else {
+      product.style.display = "none";
+    }
+  });
+}
+
+
+function openModal(name, price, image) {
+  document.getElementById("modal-img").src = image;
+  document.getElementById("modal-title").innerText = name;
+  document.getElementById("modal-price").innerText = "₹" + price;
+
+  const btn = document.getElementById("modal-cart-btn");
+  btn.onclick = function () {
+    addToCart(name, price);
+    closeModal();
+  };
+
+  document.getElementById("productModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("productModal").style.display = "none";
+}
+
 
